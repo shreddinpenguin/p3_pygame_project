@@ -1,6 +1,7 @@
 import pygame
+from settings import SCREEN_HEIGHT
+# from level import *
 
-screen = pygame.display.set_mode((800, 600))
 class Player(pygame.sprite.Sprite):
     def __init__(self, image, x, y, scale):
         super().__init__()
@@ -14,37 +15,23 @@ class Player(pygame.sprite.Sprite):
         #player movement
         self.direction = pygame.math.Vector2(0,0)
         self.vel = 5
-        self.gravity = 0.8
+        self.gravity = 0
         self.jump_speed = -10
-
-    def flip_left(self):
-        self.flip = True
-        self.draw()
-
-    def flip_right(self):
-        self.flip = False 
-        self.draw()
-
-    def draw(self):
-        screen.blit(pygame.transform.flip(self.image, self.flip, False), self.rect)
+        self.mask = pygame.mask.from_surface(self.image)
 
     def move(self):
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_LEFT]:
-            self.direction.x = -1 / 2
-            self.flip_left()
-        elif keys[pygame.K_RIGHT]:
-            self.direction.x = 1 / 2
-            self.flip_right()
-        else:
-            self.direction.x = 0
-        if keys[pygame.K_SPACE]:
+        if keys[pygame.K_SPACE] and self.direction.y >= -1:
             self.jump()
+            self.gravity = 0.8
 
     def apply_gravity(self):
-        self.direction.y += self.gravity
-        self.rect.y += self.direction.y
-
+        if self.rect.y <= SCREEN_HEIGHT:
+            self.direction.y += self.gravity
+            self.rect.y += self.direction.y
+        else:
+            pygame.quit()
+    
     def jump(self):
         self.direction.y = self.jump_speed
 
