@@ -1,6 +1,5 @@
 import pygame
 from settings import SCREEN_HEIGHT
-# from level import *
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, image, x, y, scale):

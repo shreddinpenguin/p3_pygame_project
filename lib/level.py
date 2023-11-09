@@ -2,15 +2,18 @@ import pygame
 from tile import Tile
 from settings import *
 from player import Player
+# from menu import main_menu
+
 scale = 0.16  
-start_score = False
-globalScore = 0
+# start_score = False
+# globalScore = 0
+
 class Level:
     def __init__(self, level_data, surface):
         self.display_surface = surface
         self.setup_level(level_data)
         self.world_shift = 0
-        # self.points = 0
+        self.points = 0
 
     def setup_level(self, layout):
         self.tiles = pygame.sprite.Group()
@@ -35,13 +38,13 @@ class Level:
         if keys[pygame.K_SPACE]:
             self.world_shift = -4
     
-    def display_score(self):
-        self.font = pygame.font.SysFont('Arial', 40)
-        globalScore = int(pygame.time.get_ticks() // 1400)
-        score_surf = self.font.render(str(self.points), True, "black")
-        score_rect = score_surf.get_rect(midtop = (SCREEN_WIDTH / 2, SCREEN_HEIGHT / 10))
-        self.display_surface.blit(score_surf,score_rect)
-        return globalScore
+    # def display_score(self):
+    #     self.font = pygame.font.SysFont('Arial', 40)
+    #     globalScore = int(pygame.time.get_ticks() // 1400)
+    #     score_surf = self.font.render(str(self.points), True, "black")
+    #     score_rect = score_surf.get_rect(midtop = (SCREEN_WIDTH / 2, SCREEN_HEIGHT / 10))
+    #     self.display_surface.blit(score_surf,score_rect)
+    #     return globalScore
 
     def horizontal_collision(self):
         player = self.player.sprite
@@ -52,11 +55,11 @@ class Level:
                 if player.direction.x < 0:
                     player.rect.left = sprite.rect.right
                     pygame.quit()
-                    return self.points
                 elif player.direction.x > 0:
                     player.rect.right = sprite.rect.left
                     pygame.quit()
-                    return self.points
+                    # pygame.font.quit()
+                    # return self.points
 
     def vertical_collision(self):
         player = self.player.sprite
@@ -67,16 +70,13 @@ class Level:
                 if player.direction.y > 0:
                     player.rect.bottom = sprite.rect.top
                     pygame.quit()
-                    return self.points
                 elif SCREEN_HEIGHT <= player.direction[1]:
                     pygame.quit()
-                    return self.points
                     player.direction.y = 0
                 elif player.direction.y < 0:
                     player.rect.top = sprite.rect.bottom
                     player.direction.y = 0
                     pygame.quit()
-                    return self.points
 
     def run(self):
         #level tiles
@@ -88,4 +88,4 @@ class Level:
         self.player.draw(self.display_surface)
         self.horizontal_collision()
         self.vertical_collision()
-        self.display_score()
+        # self.display_score()

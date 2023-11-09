@@ -1,6 +1,6 @@
 from sqlalchemy import ForeignKey, Column, Integer, String, create_engine
 from sqlalchemy.orm import Session, declarative_base, relationship, validates
-from level import *
+# from level import *
 
 Base = declarative_base()
 
@@ -22,8 +22,13 @@ class Result(Base):
 engine = create_engine("sqlite:///flappy.db")
 # Base.metadata.drop_all(engine)
 Base.metadata.create_all(engine)
-session = Session(engine)
-#     taylor = User(name="Taylor")
-#     first_game = Result(player_name="Taylor", score=0, user=taylor)
-#     session.add_all([taylor, first_game])
-#     session.commit()
+with Session(engine) as session:
+    pass
+    # taylor = User(name="Taylor")
+    # sam = User(name="Sam")
+    # danny = User(name="Danny")
+    # first_game = Result(player_name="Sam", score=37, user=taylor)
+    # second_game = Result(player_name="Taylor", score=1337, user=taylor)
+    # third_game = Result(player_name="Danny", score=38, user=taylor)
+    # session.add_all([taylor, sam, danny, first_game, second_game, third_game])
+    # session.commit()
