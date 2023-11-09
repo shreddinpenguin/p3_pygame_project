@@ -123,6 +123,7 @@ def high_score():
     main_menu()
 
 def edit_player():
+    print_player_menu()
     player_menu = [
         inquirer.List('option',
             message='Please Select',

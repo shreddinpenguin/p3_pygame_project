@@ -4,6 +4,7 @@ from player import *
 from settings import *
 from level import *
 from relationships import *
+import os
 
 def run_game():
     global run
@@ -18,7 +19,7 @@ def run_game():
         screen.blit(score_surf,score_rect)
         if score_surf is None:
             run = False
-        print(globalScore)
+        # print(globalScore)
         return globalScore
 
     #setting screen size
@@ -54,9 +55,10 @@ def run_game():
         pygame.display.update()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                os.system("clear")
                 pygame.quit()
+                exit() 
                 
-    pygame.quit()
     return points
     
 
